@@ -44,7 +44,7 @@ The server will receive this and process it.
 
 2️⃣ registerStompEndpoints(StompEndpointRegistry registry)
 👉 What does it do?
-It sets up WebSocket endpoints (like a URL) where clients can connect.
+It sets up WebSocket endpoints (like a URL) `where clients can connect`.
 
 👉 Why do we need it?
 Without this, clients won’t know where to connect to WebSockets.

@@ -1,54 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>Stock Market</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-  <script>
-    let stompClient = null;
-
-    function connect() {
-      let socket = new SockJS('/ws-stock');
-      stompClient = Stomp.over(socket);
-      stompClient.connect({}, function () {
-        stompClient.subscribe('/topic/stocks', function (message) {
-          let stocks = JSON.parse(message.body);
-          updateStockTable(stocks);
-        });
-      });
-    }
-
-    function updateStockTable(stocks) {
-      let table = document.getElementById("stockTable");
-      table.innerHTML = "";
-      stocks.forEach(stock => {
-        let row = table.insertRow();
-        row.insertCell(0).innerText = stock.id;
-        row.insertCell(1).innerText = stock.name;
-        row.insertCell(2).innerText = stock.symbol;
-        row.insertCell(3).innerText = stock.price.toFixed(2);
-        row.insertCell(4).innerText = stock.change.toFixed(2) + "%";
-      });
-    }
-
-    window.onload = connect;
-  </script>
+<head th:replace="~{fragment/head :: head}">
 </head>
-<body>
-<h2>Stock Market</h2>
-<table border="1">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Symbol</th>
-    <th>Price</th>
-    <th>Change (%)</th>
-  </tr>
-  </thead>
-  <tbody id="stockTable">
-  <!-- Stocks will be added dynamically -->
-  </tbody>
-</table>
+<body class="bg-shallow_dark">
+
+<!--Navbar-->
+<nav th:replace="~{fragment/navbar :: navbar}"></nav>
+<!--Navbar Ends-->
+
+<!--Show Prices-->
+<div class="container-fluid mt-3 ">
+    <div class="row">
+        <div class="col-md-10">
+            <table class="table table-striped table-dark text-warning table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Symbol</th>
+                    <th>Price</th>
+                    <th>Change (%)</th>
+                </tr>
+                </thead>
+                <tbody id="stockTable">
+                <!-- Stocks will be added dynamically -->
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2 bg-dark p-2">
+
+            <!-- User's information (userId) -->
+            <input type="hidden" id="userId" th:value="${user.id}"/> <!-- Hardcoded user ID for now -->
+
+            <h5 class="text-warning text-center">Buy Stock</h5>
+            <form id="buyForm">
+                <input type="number" id="stockBuyId" class="form-control" placeholder="Stock ID" required/><br/>
+                <input type="number" id="buyQuantity" class="form-control" placeholder="Quantity" required/><br>
+                <button type="submit" class="btn btn-warning" id="buyBtn">Buy</button>
+            </form>
+
+            <h5 class="text-warning text-center">Sell Stock</h5>
+            <form id="sellForm">
+                <input type="number" id="stockSellId" class="form-control" placeholder="Stock ID" required/><br/>
+                <input type="number" id="sellQuantity" class="form-control" placeholder="Quantity" required/><br>
+
+                <button type="submit" class="btn btn-warning" id="sellBtn">Sell</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Toast Starts-->
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Stock</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toast-body">
+
+        </div>
+    </div>
+</div>
+
+<!--Toast Ends-->
+
 </body>
+<script th:src="@{'/js/stocks.js'}"></script>
+<script th:src="@{'/js/trade.js'}"></script>
 </html>

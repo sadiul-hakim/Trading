@@ -11,13 +11,13 @@ public class User {
     private Long id;
     private String username;
     private double balance;
-    private double password;
+    private String password;
     private String role;
 
     public User() {
     }
 
-    public User(Long id, String username, double balance, double password, String role) {
+    public User(Long id, String username, double balance, String password, String role) {
         this.id = id;
         this.username = username;
         this.balance = balance;
@@ -49,11 +49,11 @@ public class User {
         this.balance = balance;
     }
 
-    public double getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(double password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

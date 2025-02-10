@@ -1,4 +1,4 @@
-package xyz.sadiulhakim.config;
+package xyz.sadiulhakim.demo;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

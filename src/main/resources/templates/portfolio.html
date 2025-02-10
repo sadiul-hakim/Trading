@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Your Portfolio</title>
+</head>
+<body>
+<h2>Your Portfolio</h2>
+<p>Balance: $<span th:text="${user.balance}"></span></p>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Stock</th>
+    <th>Quantity</th>
+    <th>Current Price</th>
+    <th>Value</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="portfolio : ${portfolios}">
+    <td th:text="${portfolio.stock.name}"></td>
+    <td th:text="${portfolio.quantity}"></td>
+    <td th:text="${portfolio.stock.price}"></td>
+    <td th:text="${portfolio.quantity * portfolio.stock.price}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+<a href="/stocks">View Stock Market</a>
+</body>
+</html>

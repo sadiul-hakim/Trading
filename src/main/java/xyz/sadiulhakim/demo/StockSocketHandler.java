@@ -1,4 +1,4 @@
-package xyz.sadiulhakim.config;
+package xyz.sadiulhakim.demo;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;

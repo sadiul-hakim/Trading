@@ -3,7 +3,7 @@ package xyz.sadiulhakim.trade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.sadiulhakim.portfolio.Portfolio;
-import xyz.sadiulhakim.portfolio.PortfolioRepository;
+import xyz.sadiulhakim.portfolio.PortfolioService;
 import xyz.sadiulhakim.stock.Stock;
 import xyz.sadiulhakim.stock.StockRepository;
 import xyz.sadiulhakim.user.User;
@@ -14,13 +14,13 @@ public class TradeService {
 
     private final StockRepository stockRepository;
     private final UserRepository userRepository;
-    private final PortfolioRepository portfolioRepository;
+    private final PortfolioService portfolioService;
 
     public TradeService(StockRepository stockRepository, UserRepository userRepository,
-                        PortfolioRepository portfolioRepository) {
+                        PortfolioService portfolioService) {
         this.stockRepository = stockRepository;
         this.userRepository = userRepository;
-        this.portfolioRepository = portfolioRepository;
+        this.portfolioService = portfolioService;
     }
 
     @Transactional
@@ -36,11 +36,10 @@ public class TradeService {
         user.setBalance(user.getBalance() - cost);
         userRepository.save(user);
 
-        Portfolio portfolio = portfolioRepository.findByUserAndStock(user, stock)
-                .orElse(new Portfolio(null, user, stock, 0));
+        Portfolio portfolio = portfolioService.findByUserAndStock(user, stock);
 
         portfolio.setQuantity(portfolio.getQuantity() + quantity);
-        portfolioRepository.save(portfolio);
+        portfolioService.save(portfolio);
 
         return "Stock purchased successfully!";
     }
@@ -49,8 +48,10 @@ public class TradeService {
     public String sellStock(Long userId, Long stockId, int quantity) {
         User user = userRepository.findById(userId).orElseThrow();
         Stock stock = stockRepository.findById(stockId).orElseThrow();
-        Portfolio portfolio = portfolioRepository.findByUserAndStock(user, stock)
-                .orElseThrow(() -> new RuntimeException("You do not own this stock"));
+        Portfolio portfolio = portfolioService.findByUserAndStock(user, stock);
+        if (portfolio.getId() == null) {
+            throw new RuntimeException("You do not own this stock");
+        }
 
         if (portfolio.getQuantity() < quantity) {
             return "Not enough shares to sell!";
@@ -62,9 +63,9 @@ public class TradeService {
 
         portfolio.setQuantity(portfolio.getQuantity() - quantity);
         if (portfolio.getQuantity() == 0) {
-            portfolioRepository.delete(portfolio);
+            portfolioService.delete(portfolio);
         } else {
-            portfolioRepository.save(portfolio);
+            portfolioService.save(portfolio);
         }
 
         return "Stock sold successfully!";

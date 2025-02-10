@@ -9,11 +9,11 @@ import xyz.sadiulhakim.user.UserRepository;
 @Controller
 public class PortfolioController {
 
-    private final PortfolioRepository portfolioRepository;
+    private final PortfolioService portfolioService;
     private final UserRepository userRepository;
 
-    public PortfolioController(PortfolioRepository portfolioRepository, UserRepository userRepository) {
-        this.portfolioRepository = portfolioRepository;
+    public PortfolioController(PortfolioService portfolioService, UserRepository userRepository) {
+        this.portfolioService = portfolioService;
         this.userRepository = userRepository;
     }
 
@@ -22,7 +22,7 @@ public class PortfolioController {
 
         User hakim = userRepository.findByUsername("Sadiul Hakim").orElse(new User());
         model.addAttribute("user", hakim);
-        model.addAttribute("portfolios", portfolioRepository.findAll());
+        model.addAttribute("portfolios", portfolioService.findAll());
 
         return "portfolio";
     }

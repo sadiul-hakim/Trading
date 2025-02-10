@@ -11,14 +11,18 @@ public class User {
     private Long id;
     private String username;
     private double balance;
+    private double password;
+    private String role;
 
     public User() {
     }
 
-    public User(Long id, String username, double balance) {
+    public User(Long id, String username, double balance, double password, String role) {
         this.id = id;
         this.username = username;
         this.balance = balance;
+        this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -43,5 +47,21 @@ public class User {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public double getPassword() {
+        return password;
+    }
+
+    public void setPassword(double password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

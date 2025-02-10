@@ -17,7 +17,7 @@ public class StockUpdater {
         this.stockService = stockService;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 2000)
     public void sendStockUpdates() {
         List<Stock> stocks = stockService.updateStockPrices();
         messagingTemplate.convertAndSend("/topic/stocks", stocks);

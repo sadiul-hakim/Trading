@@ -18,6 +18,10 @@ public class StockService {
         return stockRepository.findAll();
     }
 
+    public Stock findBySymbol(String symbol) {
+        return stockRepository.findBySymbol(symbol).orElse(new Stock());
+    }
+
     public List<Stock> updateStockPrices() {
         List<Stock> stocks = stockRepository.findAll();
         Random random = new Random();

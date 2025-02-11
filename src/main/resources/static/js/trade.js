@@ -8,6 +8,7 @@ const toastBody = document.getElementById("toast-body");
 buyBtn.onclick = function (e) {
 
     e.preventDefault();
+    let buyCsrf = document.getElementById("buyCsrf").value;
     let stockId = document.getElementById("stockBuyId").value;
     let quantity = document.getElementById("buyQuantity").value;
     let userId = document.getElementById("userId").value;
@@ -16,11 +17,13 @@ buyBtn.onclick = function (e) {
     formData.append('userId', userId);
     formData.append('stockId', stockId);
     formData.append('quantity', quantity);
+    formData.append("X-CSRF-Token", buyCsrf);
 
     fetch('/trade/buy', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-Token': buyCsrf
         },
         body: formData
     })
@@ -44,6 +47,7 @@ sellBtn.onclick = function (e) {
 
     e.preventDefault();
     let stockId = document.getElementById("stockSellId").value;
+    let sellCsrf = document.getElementById("sellCsrf").value;
     let quantity = document.getElementById("sellQuantity").value;
     let userId = document.getElementById("userId").value;
 
@@ -51,11 +55,13 @@ sellBtn.onclick = function (e) {
     formData.append('userId', userId);
     formData.append('stockId', stockId);
     formData.append('quantity', quantity);
+    formData.append("X-CSRF-Token", sellCsrf);
 
     fetch('/trade/sell', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-Token': sellCsrf
         },
         body: formData
     })

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragment/head :: head}">
+</head>
+<body class="bg-shallow_dark">
+
+<!--Navbar-->
+<nav th:replace="~{fragment/navbar :: navbar}"></nav>
+<!--Navbar Ends-->
+
+<h1 class="text-warning text-center p-3 m-4">Live Stock Price Tracker (<span th:text="${symbol}"></span>)</h1>
+<p class="hidden" th:text="${symbol}" id="symbol"></p>
+<div class="container">
+    <div id="chart" class="w-100" style="height: 800px;"></div>
+</div>
+</body>
+<script th:src="@{'/js/lightweight-charts.standalone.production.js'}"></script>
+<script th:src="@{'/js/stockCandle.js'}"></script>
+</html>

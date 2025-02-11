@@ -20,6 +20,7 @@
                     <th>Symbol</th>
                     <th>Price</th>
                     <th>Change (%)</th>
+                    <th>#</th>
                 </tr>
                 </thead>
                 <tbody id="stockTable">
@@ -34,17 +35,19 @@
 
             <h5 class="text-warning text-center">Buy Stock</h5>
             <form id="buyForm">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="buyCsrf"/>
                 <input type="number" id="stockBuyId" class="form-control" placeholder="Stock ID" required/><br/>
                 <input type="number" id="buyQuantity" class="form-control" placeholder="Quantity" required/><br>
-                <button type="submit" class="btn btn-warning" id="buyBtn">Buy</button>
+                <button class="btn btn-warning" id="buyBtn">Buy</button>
             </form>
 
             <h5 class="text-warning text-center">Sell Stock</h5>
             <form id="sellForm">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="sellCsrf"/>
                 <input type="number" id="stockSellId" class="form-control" placeholder="Stock ID" required/><br/>
                 <input type="number" id="sellQuantity" class="form-control" placeholder="Quantity" required/><br>
 
-                <button type="submit" class="btn btn-warning" id="sellBtn">Sell</button>
+                <button class="btn btn-warning" id="sellBtn">Sell</button>
             </form>
         </div>
     </div>

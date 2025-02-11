@@ -22,17 +22,16 @@ public class StockService {
         return stockRepository.findBySymbol(symbol).orElse(new Stock());
     }
 
-    public List<Stock> updateStockPrices() {
+    public void updateStockPrices() {
         List<Stock> stocks = stockRepository.findAll();
         Random random = new Random();
 
         for (Stock stock : stocks) {
-            double change = (random.nextDouble() * 2 - 1) * 5; // -5% to +5% change
-            stock.setPrice(stock.getPrice() * (1 + change / 100));
-            stock.setChange(change);
+            // -1% to +1% change
+            double change = (random.nextDouble() * 2 - 1); // Generates a value between -1 and 1
+            stock.setPrice(stock.getPrice() * (1 + change / 100)); // Adjust price by the change percentage
+            stock.setChange(change); // Set the percentage change for the stock
             stockRepository.save(stock);
         }
-
-        return stocks;
     }
 }

@@ -1,5 +1,6 @@
 package xyz.sadiulhakim.stock;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +16,11 @@ public class StockController {
         this.userService = userService;
     }
 
-    @GetMapping("/stocks")
-    String stocksPage(Model model) {
+    @GetMapping("/")
+    String stocksPage(Model model, Authentication authentication) {
 
-        User sadiulHakim = userService.findByUsername("Sadiul Hakim");
-        model.addAttribute("user", sadiulHakim);
+        User user = userService.findByUsername(authentication.getName());
+        model.addAttribute("user", user);
         return "stocks";
     }
 }

@@ -7,6 +7,10 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

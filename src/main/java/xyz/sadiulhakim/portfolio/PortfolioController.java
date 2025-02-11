@@ -1,5 +1,6 @@
 package xyz.sadiulhakim.portfolio;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +19,10 @@ public class PortfolioController {
     }
 
     @GetMapping("/portfolio")
-    String portfolioPage(Model model) {
+    String portfolioPage(Model model, Authentication authentication) {
 
-        User hakim = userRepository.findByUsername("Sadiul Hakim").orElse(new User());
+        User hakim = userRepository.findByUsername(authentication.getName())
+                .orElse(new User());
         model.addAttribute("user", hakim);
         model.addAttribute("portfolios", portfolioService.findAll());
 

@@ -1,15 +1,13 @@
 package xyz.sadiulhakim;
 
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import xyz.sadiulhakim.stock.StockRepository;
-import xyz.sadiulhakim.user.User;
-import xyz.sadiulhakim.user.UserRepository;
 
 @SpringBootApplication
 public class Application {
+
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
 //    private final StockRepository stockRepository;
 //    private final UserRepository userRepository;
@@ -39,6 +37,13 @@ public class Application {
 //        return args -> {
 //            User hakim = new User(null, "Sadiul Hakim", 10_000);
 //            userRepository.save(hakim);
+//        };
+//    }
+
+//    @Bean
+//    ApplicationRunner passwordGenerator(){
+//        return args -> {
+//            System.out.println(passwordEncoder.encode("hakim@123"));
 //        };
 //    }
 }

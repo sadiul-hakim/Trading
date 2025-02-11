@@ -1,8 +1,8 @@
-let stompClient = null;
-
 function connect() {
     let socket = new SockJS('/ws-stock');
-    stompClient = Stomp.over(socket);
+    let stompClient = Stomp.over(socket);
+    stompClient.debug = null;
+
     stompClient.connect({}, function () {
         stompClient.subscribe('/topic/stocks', function (message) {
             let stocks = JSON.parse(message.body);
@@ -23,4 +23,5 @@ function updateStockTable(stocks) {
         row.insertCell(4).innerText = stock.change.toFixed(2) + "%";
     });
 }
+
 window.onload = connect;

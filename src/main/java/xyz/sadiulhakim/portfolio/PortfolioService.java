@@ -28,8 +28,8 @@ public class PortfolioService {
                 .orElse(new Portfolio(null, user, stock, 0));
     }
 
-    public List<Portfolio> findByUser(User user) {
-        return portfolioRepository.findByUser(user);
+    public List<Portfolio> findAllByUser(User user) {
+        return portfolioRepository.findAllByUser(user);
     }
 
     public void delete(Portfolio portfolio) {

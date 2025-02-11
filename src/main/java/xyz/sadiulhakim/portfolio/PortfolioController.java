@@ -5,26 +5,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import xyz.sadiulhakim.user.User;
-import xyz.sadiulhakim.user.UserRepository;
+import xyz.sadiulhakim.user.UserService;
 
 @Controller
 public class PortfolioController {
 
     private final PortfolioService portfolioService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public PortfolioController(PortfolioService portfolioService, UserRepository userRepository) {
+    public PortfolioController(PortfolioService portfolioService, UserService userService) {
         this.portfolioService = portfolioService;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/portfolio")
     String portfolioPage(Model model, Authentication authentication) {
 
-        User hakim = userRepository.findByUsername(authentication.getName())
-                .orElse(new User());
-        model.addAttribute("user", hakim);
-        model.addAttribute("portfolios", portfolioService.findAll());
+        User user = userService.findByUsername(authentication.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("portfolios", portfolioService.findAllByUser(user));
 
         return "portfolio";
     }

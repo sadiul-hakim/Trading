@@ -1,6 +1,8 @@
-package xyz.sadiulhakim.portfolio;
+package xyz.sadiulhakim.leader_board;
 
 import org.springframework.stereotype.Service;
+import xyz.sadiulhakim.portfolio.Portfolio;
+import xyz.sadiulhakim.portfolio.PortfolioRepository;
 import xyz.sadiulhakim.user.User;
 import xyz.sadiulhakim.user.UserRepository;
 
@@ -24,7 +26,7 @@ public class LeaderboardService {
     }
 
     public double getUserNetWorth(User user) {
-        List<Portfolio> portfolios = portfolioRepository.findByUser(user);
+        List<Portfolio> portfolios = portfolioRepository.findAllByUser(user);
         double totalStockValue = portfolios.stream()
                 .mapToDouble(p -> p.getQuantity() * p.getStock().getPrice())
                 .sum();

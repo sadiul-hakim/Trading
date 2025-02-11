@@ -2,6 +2,8 @@ package xyz.sadiulhakim.user;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -17,5 +19,9 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(new User());
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 }

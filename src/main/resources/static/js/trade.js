@@ -30,7 +30,7 @@ buyBtn.onclick = function (e) {
         .then(response => response.text())  // Assuming the response is a text message
         .then(response => {
 
-            toastBody.innerText = `Successfully bought ${quantity} stocks.`
+            toastBody.innerText = response
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
             toastBootstrap.show();
         })
@@ -68,7 +68,7 @@ sellBtn.onclick = function (e) {
         .then(response => response.text())  // Assuming the response is a text message
         .then(response => {
 
-            toastBody.innerText = `Successfully sold ${quantity} stocks.`
+            toastBody.innerText = response
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
             toastBootstrap.show();
         })

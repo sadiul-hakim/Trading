@@ -22,7 +22,7 @@ public class PortfolioUpdated {
         this.messagingTemplate = messagingTemplate;
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 2000, scheduler = "scheduledTaskScheduler")
     public void sendPortfolioUpdate() {
         List<User> users = userService.findAll(); // Fetch all users from DB
 

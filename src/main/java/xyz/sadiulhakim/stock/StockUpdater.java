@@ -24,13 +24,13 @@ public class StockUpdater {
         stockService.updateStockPrices();
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 2000, scheduler = "scheduledTaskScheduler")
     public void sendStockUpdates() {
         List<Stock> stocks = stockService.getAllStocks();
         messagingTemplate.convertAndSend("/topic/stocks", stocks);
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 2000, scheduler = "scheduledTaskScheduler")
     public void sendUpdateSeparately() {
         List<Stock> stocks = stockService.getAllStocks();
 

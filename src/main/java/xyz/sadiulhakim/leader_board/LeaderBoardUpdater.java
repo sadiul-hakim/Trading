@@ -18,7 +18,7 @@ public class LeaderBoardUpdater {
         this.messagingTemplate = messagingTemplate;
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 2000, scheduler = "scheduledTaskScheduler")
     public void sendTopTraders() {
 
         List<UserDTO> topTraders = leaderboardService.getTopTraders();

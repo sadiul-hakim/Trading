@@ -42,7 +42,7 @@ public class TradeService {
         portfolio.setQuantity(portfolio.getQuantity() + quantity);
         portfolioService.save(portfolio);
 
-        return "Stock purchased successfully!";
+        return quantity + " Stocks are purchased successfully!";
     }
 
     @Transactional
@@ -69,6 +69,6 @@ public class TradeService {
             portfolioService.save(portfolio);
         }
 
-        return "Stock sold successfully!";
+        return quantity + " Stocks are sold successfully!";
     }
 }

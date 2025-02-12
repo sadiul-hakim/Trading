@@ -27,27 +27,30 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-2 bg-dark p-2">
+        <div class="col-md-2">
 
-            <!-- User's information (userId) -->
-            <input type="hidden" id="userId" th:value="${user.id}"/> <!-- Hardcoded user ID for now -->
+            <div class="bg-dark p-2">
+                <!-- User's information (userId) -->
+                <input type="hidden" id="userId" th:value="${user.id}"/> <!-- Hardcoded user ID for now -->
 
-            <h5 class="text-warning text-center">Buy Stock</h5>
-            <form id="buyForm">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="buyCsrf"/>
-                <input type="text" id="stockBuyId" class="form-control" placeholder="Stock Symbol" required/><br/>
-                <input type="number" id="buyQuantity" class="form-control" placeholder="Quantity" required/><br>
-                <button class="btn btn-warning" id="buyBtn">Buy</button>
-            </form>
+                <h5 class="text-warning text-center">Buy Stock</h5>
+                <form id="buyForm">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="buyCsrf"/>
+                    <input type="text" id="stockBuyId" class="form-control" placeholder="Stock Symbol" required/><br/>
+                    <input type="number" id="buyQuantity" class="form-control" placeholder="Quantity" required/><br>
+                    <button class="btn btn-warning" id="buyBtn">Buy</button>
+                </form>
 
-            <h5 class="text-warning text-center">Sell Stock</h5>
-            <form id="sellForm">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="sellCsrf"/>
-                <input type="text" id="stockSellId" class="form-control" placeholder="Stock Symbol" required/><br/>
-                <input type="number" id="sellQuantity" class="form-control" placeholder="Quantity" required/><br>
+                <h5 class="text-warning text-center">Sell Stock</h5>
+                <form id="sellForm">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="sellCsrf"/>
+                    <input type="text" id="stockSellId" class="form-control" placeholder="Stock Symbol" required/><br/>
+                    <input type="number" id="sellQuantity" class="form-control" placeholder="Quantity" required/><br>
 
-                <button class="btn btn-warning" id="sellBtn">Sell</button>
-            </form>
+                    <button class="btn btn-warning" id="sellBtn">Sell</button>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

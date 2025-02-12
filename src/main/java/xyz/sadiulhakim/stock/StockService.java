@@ -1,5 +1,6 @@
 package xyz.sadiulhakim.stock;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class StockService {
     }
 
     public List<Stock> getAllStocks() {
-        return stockRepository.findAll();
+        return stockRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
     public Stock findBySymbol(String symbol) {
@@ -32,7 +33,7 @@ public class StockService {
     }
 
     public void updateStockPrices() {
-        List<Stock> stocks = stockRepository.findAll();
+        List<Stock> stocks = stockRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         Random random = new Random();
 
         for (Stock stock : stocks) {

@@ -24,9 +24,9 @@ public class TradeService {
     }
 
     @Transactional
-    public String buyStock(Long userId, Long stockId, int quantity) {
+    public String buyStock(Long userId, String symbol, int quantity) {
         User user = userRepository.findById(userId).orElseThrow();
-        Stock stock = stockRepository.findById(stockId).orElseThrow();
+        Stock stock = stockRepository.findBySymbol(symbol).orElseThrow();
 
         double cost = stock.getPrice() * quantity;
         if (user.getBalance() < cost) {
@@ -45,9 +45,9 @@ public class TradeService {
     }
 
     @Transactional
-    public String sellStock(Long userId, Long stockId, int quantity) {
+    public String sellStock(Long userId, String symbol, int quantity) {
         User user = userRepository.findById(userId).orElseThrow();
-        Stock stock = stockRepository.findById(stockId).orElseThrow();
+        Stock stock = stockRepository.findBySymbol(symbol).orElseThrow();
         Portfolio portfolio = portfolioService.findByUserAndStock(user, stock);
         if (portfolio.getId() == null) {
             throw new RuntimeException("You do not own this stock");

@@ -22,11 +22,13 @@
 
                 <th:block sec:authorize="isAuthenticated()">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" th:href="@{/demo}">Demo</a>
+
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link active" aria-current="page" th:href="@{/stock/create_page}">Create</a>
                     </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false" th:text="${#authentication.principal.name}">

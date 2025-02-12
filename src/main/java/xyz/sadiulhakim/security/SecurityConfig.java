@@ -25,9 +25,16 @@ class SecurityConfig {
                 "/font/**"
         };
 
+        String[] adminAccess = {
+                "/stock/create_page",
+                "/stock/create",
+                "/user/**"
+        };
+
         return http
                 .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth.requestMatchers(permitted).permitAll())
+                .authorizeHttpRequests(auth -> auth.requestMatchers(adminAccess).hasRole("ADMIN"))
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
                 .formLogin(login -> login.loginPage("/login_page")

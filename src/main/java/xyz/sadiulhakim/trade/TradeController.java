@@ -17,16 +17,16 @@ public class TradeController {
     }
 
     @PostMapping("/buy")
-    public ResponseEntity<String> buyStock(@RequestParam Long userId, @RequestParam Long stockId,
+    public ResponseEntity<String> buyStock(@RequestParam Long userId, @RequestParam String symbol,
                                            @RequestParam int quantity) {
-        String result = tradeService.buyStock(userId, stockId, quantity);
+        String result = tradeService.buyStock(userId, symbol, quantity);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/sell")
-    public ResponseEntity<String> sellStock(@RequestParam Long userId, @RequestParam Long stockId,
+    public ResponseEntity<String> sellStock(@RequestParam Long userId, @RequestParam String symbol,
                                             @RequestParam int quantity) {
-        String result = tradeService.sellStock(userId, stockId, quantity);
+        String result = tradeService.sellStock(userId, symbol, quantity);
         return ResponseEntity.ok(result);
     }
 }

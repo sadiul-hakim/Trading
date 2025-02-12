@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragment/head :: head}">
+</head>
+<body class="bg-shallow_dark">
+
+<!--Navbar-->
+<nav th:replace="~{fragment/navbar :: navbar}"></nav>
+<!--Navbar Ends-->
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <h2 class="text-warning text-center my-2">Create Stock</h2>
+            <div class="alert alert-success" th:if="${saved}">
+                <span>Stock has been added successfully!</span>
+            </div>
+            <form th:action="@{/stock/create}" class="card p-3" method="post" th:object="${dto}">
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" th:value="*{name}" required/>
+                </div>
+                <br/>
+                <div>
+                    <label for="symbol">Symbol</label>
+                    <input type="text" name="symbol" id="symbol" class="form-control" th:value="*{symbol}" required/>
+                </div>
+                <br/>
+                <div>
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price" class="form-control" th:value="*{price}" required/>
+                </div>
+                <br/>
+                <div>
+                    <button class="btn btn-warning">Create</button>
+                    <button class="btn btn-danger">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>

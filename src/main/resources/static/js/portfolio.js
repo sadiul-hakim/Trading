@@ -37,10 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
             quantityCell.textContent = portfolio.quantity;
 
             let priceCell = document.createElement("td");
-            priceCell.textContent = portfolio.stock.price.toFixed(2);
+            priceCell.textContent = portfolio.stock.price.toFixed(4);
 
             let valueCell = document.createElement("td");
-            valueCell.textContent = (portfolio.quantity * portfolio.stock.price).toFixed(2);
+            valueCell.textContent = (portfolio.quantity * portfolio.stock.price).toFixed(4);
 
             row.appendChild(stockCell);
             row.appendChild(quantityCell);

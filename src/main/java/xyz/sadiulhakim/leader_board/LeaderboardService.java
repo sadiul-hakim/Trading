@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import xyz.sadiulhakim.portfolio.Portfolio;
 import xyz.sadiulhakim.portfolio.PortfolioService;
 import xyz.sadiulhakim.user.User;
+import xyz.sadiulhakim.user.UserDTO;
 import xyz.sadiulhakim.user.UserService;
 
 import java.util.List;
@@ -19,10 +20,13 @@ public class LeaderboardService {
         this.portfolioService = portfolioService;
     }
 
-    public List<User> getTopTraders() {
+    public List<UserDTO> getTopTraders() {
         List<User> users = userService.findAll();
         users.sort((u1, u2) -> Double.compare(getUserNetWorth(u2), getUserNetWorth(u1)));
-        return users;
+
+        return users.stream().map(
+                user -> new UserDTO(user.getName(), user.getUsername(), user.getBalance(), getUserNetWorth(user))
+        ).toList();
     }
 
     public double getUserNetWorth(User user) {

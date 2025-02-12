@@ -24,7 +24,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                     </li>
-
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link active" aria-current="page" th:href="@{/stock/create_page}">Create</a>
                     </li>
@@ -35,12 +34,11 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/portfolio}">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Leader Dashboard</a></li>
+                            <li><a class="dropdown-item" th:href="@{/leader_board}">Leader Dashboard</a></li>
                             <li><a class="dropdown-item" href="#">Logout</a></li>
                         </ul>
                     </li>
                 </th:block>
-
             </ul>
         </div>
     </div>

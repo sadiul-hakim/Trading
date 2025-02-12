@@ -38,6 +38,7 @@ public class TradeService {
 
         Portfolio portfolio = portfolioService.findByUserAndStock(user, stock);
 
+        portfolio.setBuyPrice(stock.getPrice());
         portfolio.setQuantity(portfolio.getQuantity() + quantity);
         portfolioService.save(portfolio);
 

@@ -21,14 +21,17 @@ public class Portfolio {
 
     private int quantity;
 
+    private double buyPrice;
+
     public Portfolio() {
     }
 
-    public Portfolio(Long id, User user, Stock stock, int quantity) {
+    public Portfolio(Long id, User user, Stock stock, int quantity, double buyPrice) {
         this.id = id;
         this.user = user;
         this.stock = stock;
         this.quantity = quantity;
+        this.buyPrice = buyPrice;
     }
 
     public Long getId() {
@@ -61,5 +64,13 @@ public class Portfolio {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public double getBuyPrice() {
+        return buyPrice;
+    }
+
+    public void setBuyPrice(double buyPrice) {
+        this.buyPrice = buyPrice;
     }
 }

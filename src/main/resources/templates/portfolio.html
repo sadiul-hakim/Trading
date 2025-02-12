@@ -10,13 +10,18 @@
 <p class="hidden" id="loggedInUser" th:text="${#authentication.name}"></p>
 <div class="container-fluid mt-3">
     <div class="row">
-        <div class="col-md-10">
-            <p class="lead text-warning">Balance: $<span th:text="${user.balance}"></span></p>
+        <div class="col-md-10 mx-auto">
+
+            <div class="d-flex">
+                <p class="lead text-warning">Net Worth: $<span th:text="${netWorth}"></span></p>
+                <p class="lead text-warning ms-3">Balance: $<span th:text="${user.balance}"></span></p>
+            </div>
             <table class="table table-striped table-dark text-warning table-hover">
                 <thead>
                 <tr>
                     <th>Stock</th>
                     <th>Quantity</th>
+                    <th>Buy Price</th>
                     <th>Current Price</th>
                     <th>Value</th>
                 </tr>
@@ -25,6 +30,7 @@
                 <tr th:each="portfolio : ${portfolios}">
                     <td th:text="${portfolio.stock.name}"></td>
                     <td th:text="${portfolio.quantity}"></td>
+                    <td th:text="${portfolio.buyPrice}"></td>
                     <td th:text="${portfolio.stock.price}"></td>
                     <td th:text="${portfolio.quantity * portfolio.stock.price}"></td>
                 </tr>
@@ -35,7 +41,6 @@
 </div>
 
 <br>
-<a th:href="@{/}">View Stock Market</a>
 </body>
 <script th:src="@{'/js/portfolio.js'}"></script>
 </html>

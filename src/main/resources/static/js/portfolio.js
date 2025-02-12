@@ -36,14 +36,20 @@ document.addEventListener("DOMContentLoaded", function () {
             let quantityCell = document.createElement("td");
             quantityCell.textContent = portfolio.quantity;
 
+            let buyPriceCell = document.createElement("td");
+            buyPriceCell.textContent = portfolio.buyPrice.toFixed(4);
+
             let priceCell = document.createElement("td");
             priceCell.textContent = portfolio.stock.price.toFixed(4);
+            priceCell.style.color = portfolio.stock.price.toFixed(4) > portfolio.buyPrice.toFixed(4)
+                ? "green" : "red";
 
             let valueCell = document.createElement("td");
             valueCell.textContent = (portfolio.quantity * portfolio.stock.price).toFixed(4);
 
             row.appendChild(stockCell);
             row.appendChild(quantityCell);
+            row.appendChild(buyPriceCell);
             row.appendChild(priceCell);
             row.appendChild(valueCell);
 

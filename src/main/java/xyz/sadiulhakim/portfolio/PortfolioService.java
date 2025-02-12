@@ -25,7 +25,7 @@ public class PortfolioService {
 
     public Portfolio findByUserAndStock(User user, Stock stock) {
         return portfolioRepository.findByUserAndStock(user, stock)
-                .orElse(new Portfolio(null, user, stock, 0));
+                .orElse(new Portfolio(null, user, stock, 0, 0.0));
     }
 
     public List<Portfolio> findAllByUser(User user) {

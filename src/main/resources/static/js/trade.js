@@ -15,7 +15,7 @@ buyBtn.onclick = function (e) {
 
     const formData = new URLSearchParams();
     formData.append('userId', userId);
-    formData.append('stockId', stockId);
+    formData.append('symbol', stockId);
     formData.append('quantity', quantity);
     formData.append("X-CSRF-Token", buyCsrf);
 
@@ -53,7 +53,7 @@ sellBtn.onclick = function (e) {
 
     const formData = new URLSearchParams();
     formData.append('userId', userId);
-    formData.append('stockId', stockId);
+    formData.append('symbol', stockId);
     formData.append('quantity', quantity);
     formData.append("X-CSRF-Token", sellCsrf);
 

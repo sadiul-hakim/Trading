@@ -1,5 +1,6 @@
 package xyz.sadiulhakim.stock;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,12 @@ public class StockUpdater {
     private final StockService stockService;
     private final Random random = new Random();
 
+    @Value("${trading.stocks.broadcasting.channel:''}")
+    private String stocksChannel;
+
+    @Value("${trading.symbol.broadcasting.channel:''}")
+    private String symbolChannel;
+
     public StockUpdater(SimpMessagingTemplate messagingTemplate, StockService stockService) {
         this.messagingTemplate = messagingTemplate;
         this.stockService = stockService;
@@ -27,7 +34,7 @@ public class StockUpdater {
     @Scheduled(fixedRate = 2000, scheduler = "scheduledTaskScheduler")
     public void sendStockUpdates() {
         List<Stock> stocks = stockService.getAllStocks();
-        messagingTemplate.convertAndSend("/topic/stocks", stocks);
+        messagingTemplate.convertAndSend(stocksChannel, stocks);
     }
 
     @Scheduled(fixedRate = 2000, scheduler = "scheduledTaskScheduler")
@@ -46,7 +53,7 @@ public class StockUpdater {
                     stock.getSymbol(), System.currentTimeMillis() / 1000, open, high, low, close
             );
 
-            messagingTemplate.convertAndSend("/topic/symbol/" + stock.getSymbol(), priceData);
+            messagingTemplate.convertAndSend(symbolChannel + stock.getSymbol(), priceData);
         }
     }
 }

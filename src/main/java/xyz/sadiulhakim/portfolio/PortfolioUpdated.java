@@ -1,5 +1,6 @@
 package xyz.sadiulhakim.portfolio;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,9 @@ public class PortfolioUpdated {
     private final UserService userService;
     private final SimpMessagingTemplate messagingTemplate;
 
+    @Value("${trading.portfolio.broadcasting.channel:''}")
+    private String portfolioChannel;
+
     public PortfolioUpdated(PortfolioService portfolioService, UserService userService,
                             SimpMessagingTemplate messagingTemplate) {
         this.portfolioService = portfolioService;
@@ -28,7 +32,7 @@ public class PortfolioUpdated {
 
         for (User user : users) {
             List<Portfolio> portfolios = portfolioService.findAllByUser(user);
-            messagingTemplate.convertAndSendToUser(user.getUsername(), "/topic/portfolio", portfolios);
+            messagingTemplate.convertAndSendToUser(user.getUsername(), portfolioChannel, portfolios);
         }
     }
 }

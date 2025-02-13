@@ -1,29 +1,20 @@
 const loggedInUser = document.getElementById("loggedInUser");
 
 document.addEventListener("DOMContentLoaded", function () {
-    let socket = new SockJS('/ws-stock'); // Assuming WebSocket is exposed at /ws
-    let stompClient = Stomp.over(socket);
-    stompClient.debug = null;
+    const username = loggedInUser.innerText;  // Assuming username is stored in the hidden element
+    const eventSource = new EventSource(`/portfolio-stream?username=${username}`);
 
-    let wsId = loggedInUser.innerText;
-    stompClient.connect(
-        {'ws-id': wsId}, // Use same authentication headers if needed
-        function (frame) {
-            console.log("Connected to WebSocket");
+    eventSource.addEventListener("portfolioUpdate", function (event) {
 
-            // Subscribe to user-specific portfolio updates
-            stompClient.subscribe("/user/topic/portfolio", function (message) {
-                let portfolios = JSON.parse(message.body);
-                updatePortfolioTable(portfolios);
-            });
-        },
-        function (err) {
-            console.error("WebSocket error:", err);
-        }
-    );
+        const stocks = JSON.parse(event.data);
+        updatePortfolioTable(stocks);
+    });
+
+    eventSource.onerror = function (event) {
+        console.error("Error in SSE connection", event);
+    };
 
     function updatePortfolioTable(portfolios) {
-
         let tableBody = document.querySelector("#portfolio_tbody");
         tableBody.innerHTML = ""; // Clear existing rows
 
@@ -41,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let priceCell = document.createElement("td");
             priceCell.textContent = portfolio.stock.price.toFixed(4);
-            priceCell.style.color = portfolio.stock.price.toFixed(4) > portfolio.buyPrice.toFixed(4)
+            priceCell.style.color = portfolio.stock.price > portfolio.buyPrice
                 ? "green" : "red";
 
             let valueCell = document.createElement("td");

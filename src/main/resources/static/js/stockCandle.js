@@ -23,24 +23,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     chart.timeScale().fitContent();
 
-    // ✅ Connect WebSocket for live stock updates using SockJS and STOMP
-    let socket = new SockJS('/ws-stock');
-    let stompClient = Stomp.over(socket);
+    // ✅ Use SSE instead of WebSockets
+    let eventSource = new EventSource(`/stream/${symbol}`);
 
-    stompClient.connect({}, function () {
-        console.log("WebSocket connected!");
-        stompClient.subscribe(`/topic/symbol/${symbol}`, function (message) {
-            let data = JSON.parse(message.body);
-            let stockData = {
-                time: data.time,
-                open: data.open,
-                high: data.high,
-                low: data.low,
-                close: data.close
-            };
-            candlestickSeries.update(stockData);
-        });
-    }, function (error) {
-        console.error("WebSocket Error:", error);
+    eventSource.addEventListener("priceUpdate", function (event) {
+        let data = JSON.parse(event.data);
+        let stockData = {
+            time: data.time,
+            open: data.open,
+            high: data.high,
+            low: data.low,
+            close: data.close
+        };
+        candlestickSeries.update(stockData);
     });
+
+    eventSource.onerror = function (event) {
+        console.error("SSE Error:", event);
+        eventSource.close();
+    };
 });

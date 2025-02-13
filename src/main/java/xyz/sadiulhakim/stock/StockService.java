@@ -1,6 +1,7 @@
 package xyz.sadiulhakim.stock;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,5 +44,10 @@ public class StockService {
             stock.setChange(change); // Set the percentage change for the stock
             stockRepository.save(stock);
         }
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void updateStocks() {
+        updateStockPrices();
     }
 }

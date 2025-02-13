@@ -1,3 +1,84 @@
+## SseEmitter in Spring Boot
+
+### What is SseEmitter?
+SseEmitter is a Spring MVC component used for Server-Sent Events (SSE), allowing the server to push real-time updates to clients over HTTP. It is useful for scenarios where real-time updates are required, but full-duplex communication is unnecessary.
+
+### Example Usage
+```java
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+@RestController
+@RequestMapping("/sse")
+public class SseController {
+
+    @GetMapping("/stream")
+    public SseEmitter streamData() {
+        SseEmitter emitter = new SseEmitter();
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
+            try {
+                emitter.send("Hello at " + System.currentTimeMillis());
+            } catch (IOException e) {
+                emitter.complete();
+            }
+        }, 0, 2, TimeUnit.SECONDS);
+        return emitter;
+    }
+}
+```
+
+## WebSocket in Spring Boot
+
+### What is WebSocket?
+WebSocket is a full-duplex communication protocol that allows real-time communication between the client and server. It is useful for bidirectional data flow, such as chat applications, online games, and live notifications.
+
+### Example Usage
+
+#### WebSocket Configuration
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.config.annotation.*;
+
+@Configuration
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(new SimpleWebSocketHandler(), "/ws").setAllowedOrigins("*");
+    }
+}
+```
+
+#### WebSocket Handler
+```java
+import org.springframework.web.socket.*;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+public class SimpleWebSocketHandler extends TextWebSocketHandler {
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        session.sendMessage(new TextMessage("Received: " + message.getPayload()));
+    }
+}
+```
+
+## Difference between SseEmitter and WebSocket
+
+| Feature          | SseEmitter                         | WebSocket                       |
+|-----------------|----------------------------------|--------------------------------|
+| Communication   | One-way (Server to Client)      | Two-way (Full Duplex)         |
+| Protocol       | HTTP (Long-lived connection)    | WebSocket protocol (ws://)    |
+| Performance    | Uses fewer resources            | More resource-intensive       |
+| Scalability    | Better for high-scale systems   | Requires more connections     |
+| Use Case       | Real-time updates, notifications | Chat apps, multiplayer games  |
+| Connection Type | Multiple HTTP requests         | Persistent connection         |
+
+SseEmitter is a better choice when you need server-to-client updates with lower resource consumption, while WebSocket is more suited for interactive applications requiring bidirectional communication.
+
+
 # Web Socket
 
 ## Configuration

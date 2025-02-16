@@ -22,7 +22,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
-        configurer.setDefaultTimeout(30 * 60 * 1000); // 30 mins
+        configurer.setDefaultTimeout(60 * 60 * 1000); // 30 mins
     }
 
     @Bean

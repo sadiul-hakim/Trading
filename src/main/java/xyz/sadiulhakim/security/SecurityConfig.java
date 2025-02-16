@@ -24,7 +24,8 @@ class SecurityConfig {
                 "/image/**",
                 "/font/**",
                 "/register_page",
-                "/register"
+                "/register",
+                "/notice"
         };
 
         String[] adminAccess = {

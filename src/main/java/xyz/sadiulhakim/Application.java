@@ -34,7 +34,7 @@ public class Application {
     ApplicationRunner createStocks() {
         return args -> {
 
-            Optional<Stock> stock = stockRepository.findBySymbol("HK");
+            Optional<Stock> stock = stockRepository.findBySymbol("HT");
             if (stock.isEmpty()) {
 
                 Stock ht = new Stock(null, "Hakim Trading", "HT", 200, 0);
